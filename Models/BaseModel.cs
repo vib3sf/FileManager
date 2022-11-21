@@ -1,11 +1,11 @@
 ﻿namespace FileManager.Models;
 
-public abstract class BaseViewModel
+public abstract class BaseModel
 {
-    public string Name { get; set; }
+    private string Name { get; set; }
     public string FullPath { get; set; }
 
-    protected BaseViewModel(string name, string fullPath)
+    protected BaseModel(string name, string fullPath)
     {
         Name = name;
         FullPath = fullPath;

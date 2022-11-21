@@ -25,19 +25,19 @@ namespace FileManager
     public partial class MainWindow : Window
     {
 
-        public MainViewModel ViewModel { get; set; }
+        public MainModel Model { get; set; }
         
         public MainWindow()
         {
             InitializeComponent();
-            ViewModel = new MainViewModel(ListBox, TextBox);
+            Model = new MainModel(ListBox, TextBox);
         }
 
 
         private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var model = (BaseViewModel)ListBox.SelectedItem;
-            ViewModel.Open(model);
+            var model = (BaseModel)ListBox.SelectedItem;
+            Model.Open(model);
         }
         
         
