@@ -9,7 +9,7 @@ namespace FileManager.Models;
 
 public class MainModel : BindableBase
 {
-    public string CurrentDirectory { get; private set; } = "";
+    public string CurrentDirectory { get; set; } = "";
     private readonly ObservableCollection<BaseModel> _directoriesAndFiles = new();
 
     public readonly ReadOnlyObservableCollection<BaseModel> ReadOnlyObservableCollection;
@@ -70,7 +70,22 @@ public class MainModel : BindableBase
 
     public void BackDirectory(string directoryPath)
     {
-        
-        OpenDirectory(new DirectoryInfo(directoryPath).Parent!.FullName);
+        if (directoryPath != @"C:\")
+            OpenDirectory(new DirectoryInfo(directoryPath).Parent!.FullName);
+    }
+
+    public void FindAndOpenDirectory(string directoryPath)
+    {
+        try
+        {
+            var directoryInfo = new DirectoryInfo(directoryPath);
+        }
+        catch (DirectoryNotFoundException)
+        {
+            MessageBox.Show("Directory not found.");
+            return;
+        }
+
+        OpenDirectory(directoryPath);
     }
 }

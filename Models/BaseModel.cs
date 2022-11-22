@@ -10,7 +10,7 @@ public abstract class BaseModel
         Name = name;
         FullPath = fullPath;
     }
-
+    
     public override string ToString()
     {
         return Name;

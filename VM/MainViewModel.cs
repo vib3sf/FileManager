@@ -9,11 +9,32 @@ public class MainViewModel : BindableBase
 {
     private readonly MainModel _mainModel = new();
     public DelegateCommand<BaseModel> OpenCommand { get; }
+    public BaseModel SelectedItem { get; set; }
     public DelegateCommand<BaseModel> BackCommand { get; }
+    public DelegateCommand<string> FindCommand { get; }
 
-    public string CurrentDirectory => _mainModel.CurrentDirectory;
+    private string _textBox;
+    public string TextBox
+    {
+        get => _textBox;
+        set
+        {
+            _textBox = value;
+            _currentDirectory = _textBox; 
+        }
+    }
 
-    public BaseModel Selected { get; set; }
+    private string _currentDirectory;
+    public string CurrentDirectory
+    {
+        get => _mainModel.CurrentDirectory;
+        set
+        {
+            _currentDirectory = value;
+            RaisePropertyChanged("CurrentDirectory");
+        }
+    }
+
 
     public ReadOnlyObservableCollection<BaseModel> ReadOnlyObservableCollection =>
         _mainModel.ReadOnlyObservableCollection;
@@ -25,13 +46,15 @@ public class MainViewModel : BindableBase
         _mainModel.PropertyChanged += (s, e) => { RaisePropertyChanged(e.PropertyName); };
         OpenCommand = new DelegateCommand<BaseModel>(_ =>
         {
-            if (Selected != null) _mainModel.Open(Selected);
+            if (SelectedItem != null) _mainModel.Open(SelectedItem);
         });
         BackCommand = new DelegateCommand<BaseModel>(_ =>
         {
             _mainModel.BackDirectory(CurrentDirectory);
         });
+        FindCommand = new DelegateCommand<string>(str =>
+        {
+            _mainModel.FindAndOpenDirectory(TextBox);
+        });
     }
-    
-    
 }

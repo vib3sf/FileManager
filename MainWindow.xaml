@@ -22,7 +22,7 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.05*"/>
+            <RowDefinition Height="0.06*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
@@ -35,8 +35,13 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             
-            <TextBox Grid.Column="2" Text="{Binding CurrentDirectory, Mode=OneWay}"
-                     Margin="2"/>
+            <TextBox Grid.Column="2" Text="{Binding TextBox, 
+             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="2">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding FindCommand}" Key="Enter"/>
+                </TextBox.InputBindings>
+            </TextBox>
             
             <Button Grid.Column="0" Margin="2" Content="Back" Command="{Binding BackCommand}"/>
         </Grid>
@@ -48,12 +53,12 @@
         
         <ListBox Grid.Row="1" Grid.Column="2"
                  ItemsSource="{Binding ReadOnlyObservableCollection}"
-                 SelectedItem="{Binding Selected}">
+                 SelectedItem="{Binding SelectedItem}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction 
                         Command="{Binding OpenCommand}"
-                        CommandParameter="{Binding Selected}"/>
+                        CommandParameter="{Binding SelectedItem}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>
