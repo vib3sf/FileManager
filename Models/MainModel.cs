@@ -3,22 +3,21 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using Prism.Mvvm;
 
 namespace FileManager.Models;
 
 public class MainModel : BindableBase
 {
-    private string _currentDirectory = "";
+    public string CurrentDirectory { get; set; } = "";
     private readonly ObservableCollection<BaseModel> _directoriesAndFiles = new();
-    private readonly ListBox _listBox;
-    private readonly TextBox _textBox;
 
-    public MainModel(ListBox listBox, TextBox textBox)
+    public readonly ReadOnlyObservableCollection<BaseModel> ReadOnlyObservableCollection;
+
+
+    public MainModel()
     {
-        _listBox = listBox;
-        _textBox = textBox;
+        ReadOnlyObservableCollection = new ReadOnlyObservableCollection<BaseModel>(_directoriesAndFiles);
         OpenDirectory(@"C:\");
     }
     
@@ -37,7 +36,7 @@ public class MainModel : BindableBase
     
     private void OpenDirectory(string directoryPath)
     {
-        _currentDirectory = directoryPath;
+        CurrentDirectory = directoryPath;
         var directoryInfo = new DirectoryInfo(directoryPath);
         try
         {
@@ -59,8 +58,7 @@ public class MainModel : BindableBase
         {
             _directoriesAndFiles.Add(new FileModel(file.Name, file.FullName));
         }
-        _listBox.ItemsSource = _directoriesAndFiles;
-        _textBox.Text = _currentDirectory;
+        
         
     }
 

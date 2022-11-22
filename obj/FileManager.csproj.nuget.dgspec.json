@@ -14,12 +14,14 @@
         "outputPath": "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\vib3sf\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\vib3sf\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0-windows"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,6 +40,10 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
+            "Avalonia.Xaml.Interactions": {
+              "target": "Package",
+              "version": "[11.0.0-preview4, )"
+            },
             "Microsoft.Xaml.Behaviors.Wpf": {
               "target": "Package",
               "version": "[1.1.39, )"
@@ -45,6 +51,10 @@
             "Prism.Wpf": {
               "target": "Package",
               "version": "[8.1.97, )"
+            },
+            "Scar.Common.WPF.Controls.Behaviors": {
+              "target": "Package",
+              "version": "[1.0.7033.24214, )"
             }
           },
           "imports": [
@@ -66,7 +76,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\vib3sf\\.dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

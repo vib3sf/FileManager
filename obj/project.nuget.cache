@@ -1,12 +1,46 @@
 {
   "version": 2,
-  "dgSpecHash": "QSZYk1EJtlgMaWCFbS3fYO119z0s8HBan/fap70SxkMInYTvo/SI67HQR98Cr4TqDNdaE3SlFfuDC7pu7XgT4w==",
+  "dgSpecHash": "eKF88NmX9lwEjpHSNBtXby7AEOtyxcL6U01QRAxGFbG2w1f9LchDVZ1GMd5l+Qf7mXgo47gAz8HFVp3WQ0pFmQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager\\FileManager.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\vib3sf\\.nuget\\packages\\avalonia\\11.0.0-preview4\\avalonia.11.0.0-preview4.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\avalonia.remote.protocol\\11.0.0-preview4\\avalonia.remote.protocol.11.0.0-preview4.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\avalonia.xaml.interactions\\11.0.0-preview4\\avalonia.xaml.interactions.11.0.0-preview4.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\avalonia.xaml.interactivity\\11.0.0-preview4\\avalonia.xaml.interactivity.11.0.0-preview4.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\jetbrains.annotations\\2018.3.0\\jetbrains.annotations.2018.3.0.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\microcom.runtime\\0.11.0\\microcom.runtime.0.11.0.nupkg.sha512",
     "C:\\Users\\vib3sf\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
     "C:\\Users\\vib3sf\\.nuget\\packages\\prism.core\\8.1.97\\prism.core.8.1.97.nupkg.sha512",
-    "C:\\Users\\vib3sf\\.nuget\\packages\\prism.wpf\\8.1.97\\prism.wpf.8.1.97.nupkg.sha512"
+    "C:\\Users\\vib3sf\\.nuget\\packages\\prism.wpf\\8.1.97\\prism.wpf.8.1.97.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\scar.common.wpf.controls.behaviors\\1.0.7033.24214\\scar.common.wpf.controls.behaviors.1.0.7033.24214.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\system.componentmodel.annotations\\4.5.0\\system.componentmodel.annotations.4.5.0.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\system.reactive\\5.0.0\\system.reactive.5.0.0.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.6.0\\system.runtime.compilerservices.unsafe.4.6.0.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
+    "C:\\Users\\vib3sf\\.nuget\\packages\\system.windows.interactivity.wpf\\2.0.20525\\system.windows.interactivity.wpf.2.0.20525.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Scar.Common.WPF.Controls.Behaviors 1.0.7033.24214' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Scar.Common.WPF.Controls.Behaviors",
+      "targetGraphs": [
+        "net6.0-windows7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.Windows.Interactivity.WPF 2.0.20525' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "System.Windows.Interactivity.WPF",
+      "targetGraphs": [
+        "net6.0-windows7.0"
+      ]
+    }
+  ]
 }

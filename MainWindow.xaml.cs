@@ -24,22 +24,15 @@ namespace FileManager
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        public MainModel Model { get; set; }
-        
         public MainWindow()
         {
             InitializeComponent();
-            Model = new MainModel(ListBox, TextBox);
         }
 
 
-        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ListBox_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var model = (BaseModel)ListBox.SelectedItem;
-            Model.Open(model);
+            
         }
-        
-        
     }
 }

@@ -3,13 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FileManager"
-        xmlns:models="clr-namespace:FileManager.Models"
         xmlns:visualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
+        xmlns:vm="clr-namespace:FileManager.VM"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:interactivity="http://prismlibrary.com/"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
-    
+    <Window.DataContext>
+        <vm:MainViewModel></vm:MainViewModel>
+    </Window.DataContext>
     
     <Grid>
         
@@ -30,18 +33,25 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            <TextBox Grid.Column="1" Name="TextBox" />
+            <TextBlock Grid.Column="1" Text="{Binding CurrentDirectory}"></TextBlock>
         </Grid>
         
         <GridSplitter Grid.Row="1" Grid.Column="1" ShowsPreview="True" Width="3"
                       HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
         
-        <ListView Grid.Row="1" Grid.Column="0"></ListView>
+        <ListBox Grid.Row="1" Grid.Column="0"></ListBox>
         
-        <ListView Name = "ListBox" Grid.Row="1" Grid.Column="2" 
-                 MouseDoubleClick="Control_OnMouseDoubleClick"/>
-        
+        <ListBox Grid.Row="1" Grid.Column="2"
+                 ItemsSource="{Binding ReadOnlyObservableCollection}"
+                 SelectedItem="{Binding Selected}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction 
+                        Command="{Binding OpenCommand}"
+                        CommandParameter="{Binding Selected}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
     </Grid>
     
 </Window>
