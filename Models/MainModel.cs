@@ -9,7 +9,7 @@ namespace FileManager.Models;
 
 public class MainModel : BindableBase
 {
-    public string CurrentDirectory { get; set; } = "";
+    public string CurrentDirectory { get; private set; } = "";
     private readonly ObservableCollection<BaseModel> _directoriesAndFiles = new();
 
     public readonly ReadOnlyObservableCollection<BaseModel> ReadOnlyObservableCollection;
@@ -48,6 +48,7 @@ public class MainModel : BindableBase
             return;
         }
         
+        RaisePropertyChanged("CurrentDirectory");
         _directoriesAndFiles.Clear();
         foreach (var directory in directoryInfo.GetDirectories())
         {

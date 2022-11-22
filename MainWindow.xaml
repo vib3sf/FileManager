@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="1" Text="{Binding CurrentDirectory}"></TextBlock>
+            <TextBox Grid.Column="1" Text="{Binding CurrentDirectory, Mode=OneWay}"></TextBox>
         </Grid>
         
         <GridSplitter Grid.Row="1" Grid.Column="1" ShowsPreview="True" Width="3"
