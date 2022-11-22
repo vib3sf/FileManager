@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
 using FileManager.Models;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -12,9 +9,10 @@ public class MainViewModel : BindableBase
 {
     private readonly MainModel _mainModel = new();
     public DelegateCommand<BaseModel> OpenCommand { get; }
+    public DelegateCommand<BaseModel> BackCommand { get; }
 
     public string CurrentDirectory => _mainModel.CurrentDirectory;
-    
+
     public BaseModel Selected { get; set; }
 
     public ReadOnlyObservableCollection<BaseModel> ReadOnlyObservableCollection =>
@@ -25,9 +23,13 @@ public class MainViewModel : BindableBase
     public MainViewModel()
     {
         _mainModel.PropertyChanged += (s, e) => { RaisePropertyChanged(e.PropertyName); };
-        OpenCommand = new DelegateCommand<BaseModel>(x =>
+        OpenCommand = new DelegateCommand<BaseModel>(_ =>
         {
             if (Selected != null) _mainModel.Open(Selected);
+        });
+        BackCommand = new DelegateCommand<BaseModel>(_ =>
+        {
+            _mainModel.BackDirectory(CurrentDirectory);
         });
     }
     

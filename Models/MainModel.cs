@@ -67,4 +67,10 @@ public class MainModel : BindableBase
     {
         Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
     }
+
+    public void BackDirectory(string directoryPath)
+    {
+        
+        OpenDirectory(new DirectoryInfo(directoryPath).Parent!.FullName);
+    }
 }
