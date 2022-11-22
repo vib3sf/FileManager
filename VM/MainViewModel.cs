@@ -20,19 +20,14 @@ public class MainViewModel : BindableBase
         set
         {
             _textBox = value;
-            _currentDirectory = _textBox; 
+            CurrentDirectory = _textBox; 
+            RaisePropertyChanged("TextBox");
         }
     }
 
     private string _currentDirectory;
-    public string CurrentDirectory
-    {
-        get => _mainModel.CurrentDirectory;
-        set
-        {
-            _currentDirectory = value;
-            RaisePropertyChanged("CurrentDirectory");
-        }
+    private string CurrentDirectory { get => _mainModel.CurrentDirectory;
+        set => _currentDirectory = value;
     }
 
 
@@ -43,14 +38,17 @@ public class MainViewModel : BindableBase
 
     public MainViewModel()
     {
+        TextBox = CurrentDirectory;
         _mainModel.PropertyChanged += (s, e) => { RaisePropertyChanged(e.PropertyName); };
         OpenCommand = new DelegateCommand<BaseModel>(_ =>
         {
             if (SelectedItem != null) _mainModel.Open(SelectedItem);
+            TextBox = CurrentDirectory;
         });
         BackCommand = new DelegateCommand<BaseModel>(_ =>
         {
             _mainModel.BackDirectory(CurrentDirectory);
+            TextBox = CurrentDirectory;
         });
         FindCommand = new DelegateCommand<string>(str =>
         {
