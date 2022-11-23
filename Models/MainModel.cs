@@ -36,7 +36,6 @@ public class MainModel : BindableBase
     
     private void OpenDirectory(string directoryPath)
     {
-        CurrentDirectory = directoryPath;
         var directoryInfo = new DirectoryInfo(directoryPath);
         try
         {
@@ -47,7 +46,8 @@ public class MainModel : BindableBase
             MessageBox.Show("Access is denied.");
             return;
         }
-        
+        CurrentDirectory = directoryPath;
+
         RaisePropertyChanged("CurrentDirectory");
         _directoriesAndFiles.Clear();
         foreach (var directory in directoryInfo.GetDirectories())

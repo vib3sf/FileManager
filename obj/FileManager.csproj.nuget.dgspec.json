@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager\\FileManager.csproj": {}
+    "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager\\FileManager.csproj": {
+    "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager\\FileManager.csproj",
+        "projectUniqueName": "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager.csproj",
         "projectName": "FileManager",
-        "projectPath": "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager\\FileManager.csproj",
+        "projectPath": "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager.csproj",
         "packagesPath": "C:\\Users\\vib3sf\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\FileManager\\obj\\",
+        "outputPath": "C:\\Users\\vib3sf\\RiderProjects\\FileManager\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\vib3sf\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\vib3sf\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0-windows"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,10 +38,6 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
-            "Avalonia.Xaml.Interactions": {
-              "target": "Package",
-              "version": "[11.0.0-preview4, )"
-            },
             "Microsoft.Xaml.Behaviors.Wpf": {
               "target": "Package",
               "version": "[1.1.39, )"
@@ -68,6 +62,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.11, 6.0.11]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.11, 6.0.11]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.11, 6.0.11]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.11, 6.0.11]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"

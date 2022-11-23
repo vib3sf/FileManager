@@ -3,7 +3,7 @@ using FileManager.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 
-namespace FileManager.VM;
+namespace FileManager.ViewModels;
 
 public class MainViewModel : BindableBase
 {

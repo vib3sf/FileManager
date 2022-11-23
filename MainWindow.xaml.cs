@@ -28,11 +28,5 @@ namespace FileManager
         {
             InitializeComponent();
         }
-
-
-        private void ListBox_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
     }
 }
