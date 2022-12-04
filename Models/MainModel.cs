@@ -2,7 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Text.Json;
 using System.Windows;
+using System.Xml.Serialization;
 using Prism.Mvvm;
 
 namespace FileManager.Models;
@@ -10,15 +12,24 @@ namespace FileManager.Models;
 public class MainModel : BindableBase
 {
     public string CurrentDirectory { get; private set; } = "";
-    private readonly ObservableCollection<BaseModel> _directoriesAndFiles = new();
+    public ObservableCollection<BaseModel> DirectoriesAndFiles { get; } = new();
 
-    public readonly ReadOnlyObservableCollection<BaseModel> ReadOnlyObservableCollection;
+    public ObservableCollection<DirectoryModel> FavoritesDirectories { get; private set;  } = new();
+
+    private static void SaveData(ObservableCollection<DirectoryModel> models) =>
+        new XmlSerializer(typeof(ObservableCollection<DirectoryModel>)).Serialize(
+            new FileStream("favorites.xml", FileMode.OpenOrCreate), models);
+
+    private void LoadData() => FavoritesDirectories =
+        (new XmlSerializer(typeof(ObservableCollection<DirectoryModel>)).Deserialize(
+            new FileStream("favorites.xml", FileMode.OpenOrCreate)) as ObservableCollection<DirectoryModel>)!;
+    
 
 
     public MainModel()
     {
-        ReadOnlyObservableCollection = new ReadOnlyObservableCollection<BaseModel>(_directoriesAndFiles);
         OpenDirectory(@"C:\");
+        LoadData();
     }
     
     public void Open(BaseModel model)
@@ -49,15 +60,15 @@ public class MainModel : BindableBase
         CurrentDirectory = directoryPath;
 
         RaisePropertyChanged("CurrentDirectory");
-        _directoriesAndFiles.Clear();
+        DirectoriesAndFiles.Clear();
         foreach (var directory in directoryInfo.GetDirectories())
         {
-            _directoriesAndFiles.Add(new DirectoryModel(directory.Name, directory.FullName));
+            DirectoriesAndFiles.Add(new DirectoryModel(directory.Name, directory.FullName));
         }
 
         foreach (var file in directoryInfo.GetFiles())
         {
-            _directoriesAndFiles.Add(new FileModel(file.Name, file.FullName));
+            DirectoriesAndFiles.Add(new FileModel(file.Name, file.FullName));
         }
         
         
@@ -85,5 +96,12 @@ public class MainModel : BindableBase
             MessageBox.Show("Directory not found.");
         }
 
+    }
+
+    public void AddFavorite(DirectoryModel directoryModel)
+    {
+        FavoritesDirectories.Add(directoryModel);
+        SaveData(FavoritesDirectories);
+        RaisePropertyChanged("FavoritesDirectories");
     }
 }

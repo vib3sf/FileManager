@@ -1,8 +1,12 @@
-﻿namespace FileManager.Models;
+﻿using System;
 
+namespace FileManager.Models;
+
+[Serializable]
 public abstract class BaseModel
 {
-    private string Name { get; set; }
+    
+    public string Name { get; set; }
     public string FullPath { get; set; }
 
     protected BaseModel(string name, string fullPath)
@@ -10,7 +14,12 @@ public abstract class BaseModel
         Name = name;
         FullPath = fullPath;
     }
-    
+
+    protected BaseModel()
+    {
+        
+    }
+
     public override string ToString()
     {
         return Name;

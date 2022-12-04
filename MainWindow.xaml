@@ -50,10 +50,20 @@
         <GridSplitter Grid.Row="1" Grid.Column="1" ShowsPreview="True" Width="3"
                       HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
         
-        <ListBox Grid.Row="1" Grid.Column="0"></ListBox>
+        <ListBox Grid.Row="1" Grid.Column="0" 
+                 ItemsSource="{Binding FavoritesDirectories}"
+                 SelectedItem="{Binding SelectedFavoriteItem}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction 
+                        Command="{Binding OpenFavoriteCommand}"
+                        CommandParameter="{Binding SelectedFavoriteItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
         
         <ListBox Grid.Row="1" Grid.Column="2"
-                 ItemsSource="{Binding ReadOnlyObservableCollection}"
+                 ItemsSource="{Binding DirectoryAndFiles}"
                  SelectedItem="{Binding SelectedItem}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
@@ -62,6 +72,11 @@
                         CommandParameter="{Binding SelectedItem}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Pin to favorites" Command="{Binding AddFavoriteCommand}"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
     </Grid>
     

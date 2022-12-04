@@ -12,6 +12,10 @@ public class MainViewModel : BindableBase
     public BaseModel SelectedItem { get; set; }
     public DelegateCommand<BaseModel> BackCommand { get; }
     public DelegateCommand<string> FindCommand { get; }
+    public DelegateCommand<BaseModel> AddFavoriteCommand { get; }
+
+    public DelegateCommand<DirectoryModel> OpenFavoriteCommand { get; }
+    public DirectoryModel SelectedFavoriteItem { get; set; }
 
     private string _textBox;
     public string TextBox
@@ -31,10 +35,9 @@ public class MainViewModel : BindableBase
     }
 
 
-    public ReadOnlyObservableCollection<BaseModel> ReadOnlyObservableCollection =>
-        _mainModel.ReadOnlyObservableCollection;
+    public ObservableCollection<BaseModel> DirectoryAndFiles => _mainModel.DirectoriesAndFiles;
 
-    
+    public ObservableCollection<DirectoryModel> FavoritesDirectories => _mainModel.FavoritesDirectories;
 
     public MainViewModel()
     {
@@ -53,6 +56,15 @@ public class MainViewModel : BindableBase
         FindCommand = new DelegateCommand<string>(str =>
         {
             _mainModel.FindAndOpenDirectory(TextBox);
+        });
+        OpenFavoriteCommand = new DelegateCommand<DirectoryModel>(_ =>
+        {
+            if (SelectedFavoriteItem != null) _mainModel.Open(SelectedFavoriteItem);
+            TextBox = CurrentDirectory;
+        });
+        AddFavoriteCommand = new DelegateCommand<BaseModel>(_ =>
+        {
+            _mainModel.AddFavorite((SelectedItem as DirectoryModel)!);
         });
     }
 }
