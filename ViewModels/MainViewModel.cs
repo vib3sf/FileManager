@@ -15,6 +15,8 @@ public class MainViewModel : BindableBase
     public DelegateCommand<BaseModel> AddFavoriteCommand { get; }
 
     public DelegateCommand<DirectoryModel> OpenFavoriteCommand { get; }
+
+    public DelegateCommand<DirectoryModel> RemoveFavoriteCommand { get; }
     public DirectoryModel SelectedFavoriteItem { get; set; }
 
     private string _textBox;
@@ -65,6 +67,10 @@ public class MainViewModel : BindableBase
         AddFavoriteCommand = new DelegateCommand<BaseModel>(_ =>
         {
             _mainModel.AddFavorite((SelectedItem as DirectoryModel)!);
+        });
+        RemoveFavoriteCommand = new DelegateCommand<DirectoryModel>(_ =>
+        {
+            if (SelectedFavoriteItem != null) _mainModel.RemoveFavorite(SelectedFavoriteItem);
         });
     }
 }

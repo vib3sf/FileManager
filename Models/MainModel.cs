@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Text.Json;
 using System.Windows;
 using System.Xml.Serialization;
 using Prism.Mvvm;
@@ -16,9 +15,13 @@ public class MainModel : BindableBase
 
     public ObservableCollection<DirectoryModel> FavoritesDirectories { get; private set;  } = new();
 
-    private static void SaveData(ObservableCollection<DirectoryModel> models) =>
-        new XmlSerializer(typeof(ObservableCollection<DirectoryModel>)).Serialize(
-            new FileStream("favorites.xml", FileMode.OpenOrCreate), models);
+    private void SaveData()
+    {
+        var xmlSerializer = new XmlSerializer(typeof(ObservableCollection<DirectoryModel>));
+
+        using var fs = new FileStream("favorites.xml", FileMode.Create);
+        xmlSerializer.Serialize(fs, FavoritesDirectories);
+    }
 
     private void LoadData() => FavoritesDirectories =
         (new XmlSerializer(typeof(ObservableCollection<DirectoryModel>)).Deserialize(
@@ -100,8 +103,21 @@ public class MainModel : BindableBase
 
     public void AddFavorite(DirectoryModel directoryModel)
     {
+        if (FavoritesDirectories.Contains(directoryModel))
+        {
+            MessageBox.Show($"{directoryModel} is exist.");
+            return;
+        }
         FavoritesDirectories.Add(directoryModel);
-        SaveData(FavoritesDirectories);
+        SaveData();
         RaisePropertyChanged("FavoritesDirectories");
+    }
+
+    public void RemoveFavorite(DirectoryModel directoryModel)
+    {
+        FavoritesDirectories.RemoveAt(FavoritesDirectories.IndexOf(directoryModel));
+        SaveData();
+        RaisePropertyChanged("FavoritesDirectories");
+
     }
 }
