@@ -21,4 +21,19 @@
       </Page>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Icons\unknown.png" />
+      <Resource Include="Icons\unknown.png" />
+      <None Remove="Icons\directory.png" />
+      <Resource Include="Icons\directory.png" />
+      <None Remove="Icons\image.png" />
+      <Resource Include="Icons\image.png" />
+      <None Remove="Icons\notepad.jpg" />
+      <Resource Include="Icons\notepad.jpg" />
+      <None Remove="Icons\docs.png" />
+      <Resource Include="Icons\docs.png" />
+      <None Remove="Icons\pdf.png" />
+      <Resource Include="Icons\pdf.png" />
+    </ItemGroup>
+
 </Project>

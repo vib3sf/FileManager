@@ -75,8 +75,19 @@
                  SelectedItem="{Binding SelectedItem}"
                  AutoGenerateColumns="False"
                  GridLinesVisibility="None"
-                 IsReadOnly="True">
+                 IsReadOnly="True"
+                 >
+            
             <DataGrid.Columns>
+                
+                <DataGridTemplateColumn Width="25" IsReadOnly="True" CanUserResize="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Icon}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="5*"/>
                 <DataGridTextColumn Header="Creation date" Binding="{Binding CreationDate}"/>
                 <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="*"/>

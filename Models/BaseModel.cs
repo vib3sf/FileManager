@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Controls;
 
 namespace FileManager.Models;
 
@@ -10,6 +11,8 @@ public abstract class BaseModel
     public string FullPath { get; set; }
 
     public abstract string CreationDate { get; }
+    
+    public abstract string Icon { get; }
 
     protected BaseModel(string name, string fullPath)
     {

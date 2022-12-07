@@ -19,15 +19,23 @@ public class MainModel : BindableBase
     {
         var xmlSerializer = new XmlSerializer(typeof(ObservableCollection<DirectoryModel>));
 
-        using var fs = new FileStream("favorites.xml", FileMode.Create);
+        using var fs = new FileStream("tasks.xml", FileMode.Create);
         xmlSerializer.Serialize(fs, FavoritesDirectories);
     }
 
-    private void LoadData() => FavoritesDirectories =
-        (new XmlSerializer(typeof(ObservableCollection<DirectoryModel>)).Deserialize(
-            new FileStream("favorites.xml", FileMode.OpenOrCreate)) as ObservableCollection<DirectoryModel>)!;
-    
-
+    private void LoadData()
+    {
+        var xmlSerializer = new XmlSerializer(typeof(ObservableCollection<DirectoryModel>));
+        try
+        {
+            using var fs = new FileStream("tasks.xml", FileMode.OpenOrCreate);
+            FavoritesDirectories = (xmlSerializer.Deserialize(fs) as ObservableCollection<DirectoryModel>)!;
+        }
+        catch (InvalidOperationException)
+        {
+            FavoritesDirectories = new ObservableCollection<DirectoryModel>();
+        }
+    }
 
     public MainModel()
     {
