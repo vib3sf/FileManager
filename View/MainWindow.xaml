@@ -20,13 +20,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="0.06*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         
         <Grid Grid.ColumnSpan="3">
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="10*"/>
                 <ColumnDefinition Width="3*"/>
@@ -53,8 +53,17 @@
         
         <ListBox Grid.Row="1" Grid.Column="0" 
                  ItemsSource="{Binding FavoritesDirectories}"
-                 SelectedItem="{Binding SelectedFavoriteItem}"
-        >
+                 SelectedItem="{Binding SelectedFavoriteItem}">
+            
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Icon}" Width="25"/>
+                        <TextBlock Text="{Binding Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction 
@@ -80,10 +89,10 @@
             
             <DataGrid.Columns>
                 
-                <DataGridTemplateColumn Width="25" IsReadOnly="True" CanUserResize="False">
+                <DataGridTemplateColumn IsReadOnly="True" CanUserResize="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding Icon}" />
+                            <Image Source="{Binding Icon}" Width="25"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
