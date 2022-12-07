@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using FileManager.Models;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -18,16 +19,21 @@ public class MainViewModel : BindableBase
 
     public DelegateCommand<DirectoryModel> RemoveFavoriteCommand { get; }
     public DirectoryModel SelectedFavoriteItem { get; set; }
+    
+    public DelegateCommand<BaseModel> DeleteCommand { get; set; }
+    public DelegateCommand<BaseModel> CreateCommand { get; set; }
+    
+    public string NameNewModel { get; set; }
 
-    private string _textBox;
-    public string TextBox
+    private string _searchTextBox;
+    public string SearchTextBox
     {
-        get => _textBox;
+        get => _searchTextBox;
         set
         {
-            _textBox = value;
-            CurrentDirectory = _textBox; 
-            RaisePropertyChanged("TextBox");
+            _searchTextBox = value;
+            CurrentDirectory = _searchTextBox; 
+            RaisePropertyChanged("SearchTextBox");
         }
     }
 
@@ -43,26 +49,26 @@ public class MainViewModel : BindableBase
 
     public MainViewModel()
     {
-        TextBox = CurrentDirectory;
+        SearchTextBox = CurrentDirectory;
         _mainModel.PropertyChanged += (s, e) => { RaisePropertyChanged(e.PropertyName); };
         OpenCommand = new DelegateCommand<BaseModel>(_ =>
         {
             if (SelectedItem != null) _mainModel.Open(SelectedItem);
-            TextBox = CurrentDirectory;
+            SearchTextBox = CurrentDirectory;
         });
         BackCommand = new DelegateCommand<BaseModel>(_ =>
         {
             _mainModel.BackDirectory(CurrentDirectory);
-            TextBox = CurrentDirectory;
+            SearchTextBox = CurrentDirectory;
         });
         FindCommand = new DelegateCommand<string>(str =>
         {
-            _mainModel.FindAndOpenDirectory(TextBox);
+            _mainModel.FindAndOpenDirectory(SearchTextBox);
         });
         OpenFavoriteCommand = new DelegateCommand<DirectoryModel>(_ =>
         {
             if (SelectedFavoriteItem != null) _mainModel.Open(SelectedFavoriteItem);
-            TextBox = CurrentDirectory;
+            SearchTextBox = CurrentDirectory;
         });
         AddFavoriteCommand = new DelegateCommand<BaseModel>(_ =>
         {
@@ -71,6 +77,14 @@ public class MainViewModel : BindableBase
         RemoveFavoriteCommand = new DelegateCommand<DirectoryModel>(_ =>
         {
             if (SelectedFavoriteItem != null) _mainModel.RemoveFavorite(SelectedFavoriteItem);
+        });
+        DeleteCommand = new DelegateCommand<BaseModel>(_ =>
+        {
+            if (SelectedItem != null) _mainModel.Delete(SelectedItem);
+        });
+        CreateCommand = new DelegateCommand<BaseModel>(_ =>
+        {
+            if (NameNewModel != null) _mainModel.CreateFile(CurrentDirectory, NameNewModel);
         });
     }
 }

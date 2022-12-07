@@ -88,6 +88,31 @@ public class MainModel : BindableBase
             OpenDirectory(new DirectoryInfo(directoryPath).Parent!.FullName);
     }
 
+    public void CreateFile(string path, string name)
+    {
+        File.Create(path + name);
+    }
+
+    public void CreateDirectory(string path)
+    {
+        
+    }
+
+    public void Delete(BaseModel model)
+    {
+        switch (model)
+        {
+            case FileModel:
+                File.Delete(model.FullPath);
+                break;
+            case DirectoryModel:
+                Directory.Delete(model.FullPath, true);
+                break;
+        }
+
+        DirectoriesAndFiles.Remove(model);
+    }
+
     public void FindAndOpenDirectory(string directoryPath)
     {
         try

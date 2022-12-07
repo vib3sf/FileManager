@@ -1,13 +1,16 @@
 ﻿using System;
+using System.IO;
 
 namespace FileManager.Models;
 [Serializable]
 public sealed class DirectoryModel : BaseModel
 {
-    public DirectoryModel ()
-    {}
+    
+    public override string CreationDate => new DirectoryInfo(FullPath).CreationTime.ToLongDateString();
+    public DirectoryModel () {}
     public DirectoryModel(string name, string fullPath) : base(name, fullPath)
     {
     }
+
     
 }

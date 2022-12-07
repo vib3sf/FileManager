@@ -70,5 +70,5 @@ C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\FileManager.p
 C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\FileManager.genruntimeconfig.cache
 C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\ref\FileManager.dll
 C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\App.g.cs
-C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\MainWindow.g.cs
-C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\MainWindow.baml
+C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\MainWindow.g.cs
+C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\MainWindow.baml
