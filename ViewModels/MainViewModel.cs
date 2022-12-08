@@ -20,8 +20,8 @@ public class MainViewModel : BindableBase
     public DelegateCommand<DirectoryModel> RemoveFavoriteCommand { get; }
     public DirectoryModel SelectedFavoriteItem { get; set; }
     
-    public DelegateCommand<BaseModel> DeleteCommand { get; set; }
-    public DelegateCommand<BaseModel> CreateCommand { get; set; }
+    public DelegateCommand<BaseModel> DeleteCommand { get; }
+    public DelegateCommand<BaseModel> CreateFileCommand { get; }
     
     public string NameNewModel { get; set; }
 
@@ -46,6 +46,10 @@ public class MainViewModel : BindableBase
     public ObservableCollection<BaseModel> DirectoryAndFiles => _mainModel.DirectoriesAndFiles;
 
     public ObservableCollection<DirectoryModel> FavoritesDirectories => _mainModel.FavoritesDirectories;
+    
+    public DelegateCommand ForwardCommand { get; }
+    
+    
 
     public MainViewModel()
     {
@@ -58,7 +62,7 @@ public class MainViewModel : BindableBase
         });
         BackCommand = new DelegateCommand<BaseModel>(_ =>
         {
-            _mainModel.BackDirectory(CurrentDirectory);
+            _mainModel.BackDirectory();
             SearchTextBox = CurrentDirectory;
         });
         FindCommand = new DelegateCommand<string>(str =>
@@ -72,7 +76,7 @@ public class MainViewModel : BindableBase
         });
         AddFavoriteCommand = new DelegateCommand<BaseModel>(_ =>
         {
-            _mainModel.AddFavorite((SelectedItem as DirectoryModel)!);
+            if (SelectedItem is DirectoryModel model) _mainModel.AddFavorite(model);
         });
         RemoveFavoriteCommand = new DelegateCommand<DirectoryModel>(_ =>
         {
@@ -82,9 +86,14 @@ public class MainViewModel : BindableBase
         {
             if (SelectedItem != null) _mainModel.Delete(SelectedItem);
         });
-        CreateCommand = new DelegateCommand<BaseModel>(_ =>
+        CreateFileCommand = new DelegateCommand<BaseModel>(_ =>
         {
             if (NameNewModel != null) _mainModel.CreateFile(CurrentDirectory, NameNewModel);
+        });
+        ForwardCommand = new DelegateCommand(() =>
+        {
+            _mainModel.ForwardDirectory();
+            SearchTextBox = CurrentDirectory;
         });
     }
 }

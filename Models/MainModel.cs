@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -15,11 +16,13 @@ public class MainModel : BindableBase
 
     public ObservableCollection<DirectoryModel> FavoritesDirectories { get; private set;  } = new();
 
+    private Stack<string> ForwardStack { get; } = new();
+
     private void SaveData()
     {
         var xmlSerializer = new XmlSerializer(typeof(ObservableCollection<DirectoryModel>));
 
-        using var fs = new FileStream("tasks.xml", FileMode.Create);
+        using var fs = new FileStream("favorites.xml", FileMode.Create);
         xmlSerializer.Serialize(fs, FavoritesDirectories);
     }
 
@@ -28,7 +31,7 @@ public class MainModel : BindableBase
         var xmlSerializer = new XmlSerializer(typeof(ObservableCollection<DirectoryModel>));
         try
         {
-            using var fs = new FileStream("tasks.xml", FileMode.OpenOrCreate);
+            using var fs = new FileStream("favorites.xml", FileMode.OpenOrCreate);
             FavoritesDirectories = (xmlSerializer.Deserialize(fs) as ObservableCollection<DirectoryModel>)!;
         }
         catch (InvalidOperationException)
@@ -56,7 +59,7 @@ public class MainModel : BindableBase
         }
     }
     
-    private void OpenDirectory(string directoryPath)
+    private void OpenDirectory(string directoryPath, bool isForwardOrBack = false)
     {
         var directoryInfo = new DirectoryInfo(directoryPath);
         try
@@ -69,7 +72,8 @@ public class MainModel : BindableBase
             return;
         }
         CurrentDirectory = directoryPath;
-
+        if (!isForwardOrBack)
+            ForwardStack.Clear();
         RaisePropertyChanged("CurrentDirectory");
         DirectoriesAndFiles.Clear();
         foreach (var directory in directoryInfo.GetDirectories())
@@ -90,10 +94,17 @@ public class MainModel : BindableBase
         Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
     }
 
-    public void BackDirectory(string directoryPath)
+    public void BackDirectory()
     {
-        if (directoryPath != @"C:\")
-            OpenDirectory(new DirectoryInfo(directoryPath).Parent!.FullName);
+        if (CurrentDirectory == @"C:\") return;
+        ForwardStack.Push(CurrentDirectory);
+        OpenDirectory(new DirectoryInfo(CurrentDirectory).Parent!.FullName, true);
+    }
+
+    public void ForwardDirectory()
+    {
+        if (ForwardStack.Count != 0)
+            OpenDirectory(ForwardStack.Pop(), true);
     }
 
     public void CreateFile(string path, string name)
@@ -101,9 +112,9 @@ public class MainModel : BindableBase
         File.Create(path + name);
     }
 
-    public void CreateDirectory(string path)
+    public void CreateDirectory(string path, string name)
     {
-        
+        Directory.CreateDirectory(path + name);
     }
 
     public void Delete(BaseModel model)
@@ -141,6 +152,7 @@ public class MainModel : BindableBase
             MessageBox.Show($"{directoryModel} is exist.");
             return;
         }
+        
         FavoritesDirectories.Add(directoryModel);
         SaveData();
         RaisePropertyChanged("FavoritesDirectories");

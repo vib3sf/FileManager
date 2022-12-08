@@ -34,6 +34,14 @@
       <Resource Include="Icons\docs.png" />
       <None Remove="Icons\pdf.png" />
       <Resource Include="Icons\pdf.png" />
+      <None Remove="Icons\back.png" />
+      <None Remove="Icons\340.png" />
+      <None Remove="Icons\Back-PNG-Image-Background.png" />
+      <None Remove="Icons\back.ico" />
+      <None Remove="Icons\img_277182.png" />
+      <Resource Include="Icons\back.png" />
+      <None Remove="Icons\forward.png" />
+      <Resource Include="Icons\forward.png" />
     </ItemGroup>
 
 </Project>

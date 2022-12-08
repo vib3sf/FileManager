@@ -40,15 +40,21 @@
                 </TextBox.InputBindings>
             </TextBox>
             
-            <Button Grid.Column="0" Margin="2" Content="Back" Height="25" Width="45"
-                    Command="{Binding BackCommand}"/>
+            <Button Grid.Column="0" Margin="2" Height="25" Width="40"
+                    Command="{Binding BackCommand}" Background="White">
+                <Image Source="../Icons/back.png"/>
+            </Button>
+            <Button Grid.Column="1" Margin="2" Height="25" Width="40" HorizontalAlignment="Left" Background="White"
+                    Command="{Binding ForwardCommand}">
+                <Image Source="../Icons/forward.png"/>
+            </Button>
         </Grid>
         
         
         <GridSplitter Grid.Row="1" Grid.Column="1" ShowsPreview="True" Width="3"
                       HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
         
-        <GridSplitter Grid.Row="1" Grid.Column="3" ShowsPreview="True" Width="3"
+        <GridSplitter Grid.Row="1" Grid.Column="2" ShowsPreview="True" Width="3"
                       HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
         
         <ListBox Grid.Row="1" Grid.Column="0" 
@@ -58,8 +64,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding Icon}" Width="25"/>
-                        <TextBlock Text="{Binding Name}" />
+                        <Image Source="{Binding Icon}" Width="25" />
+                        <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -112,6 +118,10 @@
                 <ContextMenu>
                     <MenuItem Header="Pin to favorites" Command="{Binding AddFavoriteCommand}"/>
                     <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
+                    <MenuItem Header="Create">
+                        <MenuItem Header="Create directory"/>
+                        <MenuItem Header="Create file" Command="{Binding CreateFileCommand}"/>
+                    </MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
             
