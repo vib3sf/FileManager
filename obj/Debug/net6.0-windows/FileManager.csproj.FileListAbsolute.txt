@@ -72,3 +72,7 @@ C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\ref\FileManag
 C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\App.g.cs
 C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\MainWindow.g.cs
 C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\MainWindow.baml
+C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\DirectoryCreateWindow.g.cs
+C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\FileCreateWindow.g.cs
+C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\DirectoryCreateWindow.baml
+C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\FileCreateWindow.baml

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using FileManager.Models;
+using FileManager.View;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -21,9 +23,10 @@ public class MainViewModel : BindableBase
     public DirectoryModel SelectedFavoriteItem { get; set; }
     
     public DelegateCommand<BaseModel> DeleteCommand { get; }
-    public DelegateCommand<BaseModel> CreateFileCommand { get; }
+    public DelegateCommand<BaseModel> FileCreateWindowCommand { get; }
     
-    public string NameNewModel { get; set; }
+    public DelegateCommand DirectoryCreateWindowCommand { get; }
+   
 
     private string _searchTextBox;
     public string SearchTextBox
@@ -49,8 +52,6 @@ public class MainViewModel : BindableBase
     
     public DelegateCommand ForwardCommand { get; }
     
-    
-
     public MainViewModel()
     {
         SearchTextBox = CurrentDirectory;
@@ -86,14 +87,21 @@ public class MainViewModel : BindableBase
         {
             if (SelectedItem != null) _mainModel.Delete(SelectedItem);
         });
-        CreateFileCommand = new DelegateCommand<BaseModel>(_ =>
+        FileCreateWindowCommand = new DelegateCommand<BaseModel>(_ =>
         {
-            if (NameNewModel != null) _mainModel.CreateFile(CurrentDirectory, NameNewModel);
+            Window createWindow = new FileCreateWindow(_mainModel);
+            createWindow.ShowDialog();
+        });
+        DirectoryCreateWindowCommand = new DelegateCommand(() =>
+        {
+            Window createWindow = new DirectoryCreateWindow(_mainModel);
+            createWindow.ShowDialog();
         });
         ForwardCommand = new DelegateCommand(() =>
         {
             _mainModel.ForwardDirectory();
             SearchTextBox = CurrentDirectory;
         });
+
     }
 }

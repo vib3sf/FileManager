@@ -59,7 +59,7 @@ public class MainModel : BindableBase
         }
     }
     
-    private void OpenDirectory(string directoryPath, bool isForwardOrBack = false)
+    private void OpenDirectory(string directoryPath, bool stackClear = true)
     {
         var directoryInfo = new DirectoryInfo(directoryPath);
         try
@@ -72,7 +72,7 @@ public class MainModel : BindableBase
             return;
         }
         CurrentDirectory = directoryPath;
-        if (!isForwardOrBack)
+        if (stackClear)
             ForwardStack.Clear();
         RaisePropertyChanged("CurrentDirectory");
         DirectoriesAndFiles.Clear();
@@ -86,7 +86,6 @@ public class MainModel : BindableBase
             DirectoriesAndFiles.Add(new FileModel(file.Name, file.FullName));
         }
         
-        
     }
 
     private static void OpenFile(string filePath)
@@ -98,23 +97,25 @@ public class MainModel : BindableBase
     {
         if (CurrentDirectory == @"C:\") return;
         ForwardStack.Push(CurrentDirectory);
-        OpenDirectory(new DirectoryInfo(CurrentDirectory).Parent!.FullName, true);
+        OpenDirectory(new DirectoryInfo(CurrentDirectory).Parent!.FullName, false);
     }
 
     public void ForwardDirectory()
     {
         if (ForwardStack.Count != 0)
-            OpenDirectory(ForwardStack.Pop(), true);
+            OpenDirectory(ForwardStack.Pop(), false);
     }
 
     public void CreateFile(string path, string name)
     {
-        File.Create(path + name);
+        File.Create($"{path}\\{name}");
+        OpenDirectory(CurrentDirectory, false);
     }
 
     public void CreateDirectory(string path, string name)
     {
-        Directory.CreateDirectory(path + name);
+        Directory.CreateDirectory($"{path}\\{name}");
+        OpenDirectory(CurrentDirectory);
     }
 
     public void Delete(BaseModel model)

@@ -119,8 +119,8 @@
                     <MenuItem Header="Pin to favorites" Command="{Binding AddFavoriteCommand}"/>
                     <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
                     <MenuItem Header="Create">
-                        <MenuItem Header="Create directory"/>
-                        <MenuItem Header="Create file" Command="{Binding CreateFileCommand}"/>
+                        <MenuItem Header="Create directory" Command="{Binding DirectoryCreateWindowCommand}"/>
+                        <MenuItem Header="Create file" Command="{Binding FileCreateWindowCommand}"/>
                     </MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
