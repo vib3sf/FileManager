@@ -31,7 +31,7 @@ public class MainModel : BindableBase
         using var fs = new FileStream("favorites.xml", FileMode.Create);
         xmlSerializer.Serialize(fs, FavoritesDirectories);
     }
-
+    
     private void LoadData()
     {
         var xmlSerializer = new XmlSerializer(typeof(ObservableCollection<DirectoryModel>));
@@ -45,7 +45,6 @@ public class MainModel : BindableBase
             FavoritesDirectories = new ObservableCollection<DirectoryModel>();
         }
     }
-    
     public void Open(BaseModel model)
     {
         switch (model)

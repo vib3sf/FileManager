@@ -6,7 +6,6 @@ public sealed class FileModel : BaseModel
 { 
     public long Size => new FileInfo(FullPath).Length;
     public override string CreationDate => new FileInfo(FullPath).CreationTime.ToLongDateString();
-
     public override string Icon
     {
         get
@@ -27,7 +26,6 @@ public sealed class FileModel : BaseModel
             }
         }
     }
-
     public FileModel(string name, string fullPath) : base(name, fullPath)
     {
     }
