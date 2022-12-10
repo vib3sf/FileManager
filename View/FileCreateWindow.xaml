@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModels="clr-namespace:FileManager.ViewModels"
         mc:Ignorable="d"
-        Title="CreateWindowView" Height="110" Width="200" ResizeMode="NoResize">
+        Title="CreateWindowView" Height="110" Width="200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     
     <Grid>
         <Grid.ColumnDefinitions>

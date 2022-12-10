@@ -87,14 +87,14 @@ public class MainViewModel : BindableBase
         {
             if (SelectedItem != null) _mainModel.Delete(SelectedItem);
         });
-        FileCreateWindowCommand = new DelegateCommand<BaseModel>(_ =>
-        {
-            Window createWindow = new FileCreateWindow(_mainModel);
-            createWindow.ShowDialog();
-        });
         DirectoryCreateWindowCommand = new DelegateCommand(() =>
         {
-            Window createWindow = new DirectoryCreateWindow(_mainModel);
+            var createWindow = new DirectoryCreateWindow(_mainModel);
+            createWindow.ShowDialog();
+        });
+        FileCreateWindowCommand = new DelegateCommand<BaseModel>(_ =>
+        {
+            var createWindow = new FileCreateWindow(_mainModel);
             createWindow.ShowDialog();
         });
         ForwardCommand = new DelegateCommand(() =>

@@ -6,21 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:viewModels="clr-namespace:FileManager.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    
-    <Window.Resources>
-        <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
-            <Grid>
-                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Border BorderBrush="Aqua"></Border>
-            </Grid>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="BorderBrush" Value="Black" />
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-    </Window.Resources>
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     
     <Window.DataContext>
         <viewModels:MainViewModel/>
@@ -43,8 +29,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             
             <TextBox Grid.Column="2" Height="25" Width="300" Text="{Binding SearchTextBox, 
@@ -63,6 +50,15 @@
                     Command="{Binding ForwardCommand}" BorderThickness="0">
                 <Image Source="../Icons/forward.png" Width="30" Height="15"/>
             </Button>
+            <Button Grid.Column="3" Height="25" Width="40" Background="White" BorderThickness="0"
+                    Command="{Binding DirectoryCreateWindowCommand}" HorizontalAlignment="Left">
+                <Image Source="../Icons/directoryCreate.png" Width="30" Height="25"/>
+            </Button>
+            <Button Grid.Column="4" Height="25" Width="40" Background="White" BorderThickness="0"
+                    Command="{Binding FileCreateWindowCommand}" HorizontalAlignment="Left">
+                <Image Source="../Icons/file-plus-1.png" Width="30" Height="25"/>
+            </Button>
+            
         </Grid>
         
         
@@ -133,10 +129,6 @@
                 <ContextMenu>
                     <MenuItem Header="Pin to favorites" Command="{Binding AddFavoriteCommand}"/>
                     <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
-                    <MenuItem Header="Create">
-                        <MenuItem Header="Create directory" Command="{Binding DirectoryCreateWindowCommand}"/>
-                        <MenuItem Header="Create file" Command="{Binding FileCreateWindowCommand}"/>
-                    </MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
             

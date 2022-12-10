@@ -12,12 +12,18 @@ namespace FileManager.Models;
 public class MainModel : BindableBase
 {
     public string CurrentDirectory { get; private set; } = "";
-    public ObservableCollection<BaseModel> DirectoriesAndFiles { get; } = new();
+    public ObservableCollection<BaseModel> DirectoriesAndFiles { get; } = new(); 
+    public ObservableCollection<DirectoryModel> FavoritesDirectories { get; private set;  } = new(); 
+    private Stack<string> BackStack { get; } = new();
+    
+    
 
-    public ObservableCollection<DirectoryModel> FavoritesDirectories { get; private set;  } = new();
-
-    private Stack<string> ForwardStack { get; } = new();
-
+    public MainModel()
+    {
+        OpenDirectory(@"C:\");
+        LoadData();
+    }
+    
     private void SaveData()
     {
         var xmlSerializer = new XmlSerializer(typeof(ObservableCollection<DirectoryModel>));
@@ -39,12 +45,6 @@ public class MainModel : BindableBase
             FavoritesDirectories = new ObservableCollection<DirectoryModel>();
         }
     }
-
-    public MainModel()
-    {
-        OpenDirectory(@"C:\");
-        LoadData();
-    }
     
     public void Open(BaseModel model)
     {
@@ -59,7 +59,7 @@ public class MainModel : BindableBase
         }
     }
     
-    private void OpenDirectory(string directoryPath, bool stackClear = true)
+    private void OpenDirectory(string directoryPath, bool clearStack = true)
     {
         var directoryInfo = new DirectoryInfo(directoryPath);
         try
@@ -72,8 +72,8 @@ public class MainModel : BindableBase
             return;
         }
         CurrentDirectory = directoryPath;
-        if (stackClear)
-            ForwardStack.Clear();
+        if (clearStack)
+            BackStack.Clear();
         RaisePropertyChanged("CurrentDirectory");
         DirectoriesAndFiles.Clear();
         foreach (var directory in directoryInfo.GetDirectories())
@@ -87,52 +87,20 @@ public class MainModel : BindableBase
         }
         
     }
-
-    private static void OpenFile(string filePath)
-    {
-        Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
-    }
-
+    
     public void BackDirectory()
     {
         if (CurrentDirectory == @"C:\") return;
-        ForwardStack.Push(CurrentDirectory);
+        BackStack.Push(CurrentDirectory);
         OpenDirectory(new DirectoryInfo(CurrentDirectory).Parent!.FullName, false);
     }
 
     public void ForwardDirectory()
     {
-        if (ForwardStack.Count != 0)
-            OpenDirectory(ForwardStack.Pop(), false);
+        if (BackStack.Count != 0)
+            OpenDirectory(BackStack.Pop(), false);
     }
-
-    public void CreateFile(string path, string name)
-    {
-        File.Create($"{path}\\{name}");
-        OpenDirectory(CurrentDirectory, false);
-    }
-
-    public void CreateDirectory(string path, string name)
-    {
-        Directory.CreateDirectory($"{path}\\{name}");
-        OpenDirectory(CurrentDirectory);
-    }
-
-    public void Delete(BaseModel model)
-    {
-        switch (model)
-        {
-            case FileModel:
-                File.Delete(model.FullPath);
-                break;
-            case DirectoryModel:
-                Directory.Delete(model.FullPath, true);
-                break;
-        }
-
-        DirectoriesAndFiles.Remove(model);
-    }
-
+    
     public void FindAndOpenDirectory(string directoryPath)
     {
         try
@@ -146,6 +114,61 @@ public class MainModel : BindableBase
 
     }
 
+    private static void OpenFile(string filePath)
+    {
+        Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+    }
+    
+    public void CreateFile(string path, string name)
+    {
+        try
+        {
+            File.Create($"{path}\\{name}");
+            OpenDirectory(CurrentDirectory, false);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            MessageBox.Show("Access is denied.");
+        }
+        
+    }
+
+    public void CreateDirectory(string path, string name)
+    {
+        try
+        {
+            Directory.CreateDirectory($"{path}\\{name}");
+            OpenDirectory(CurrentDirectory);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            MessageBox.Show("Access is denied.");
+        }
+        
+    }
+
+    public void Delete(BaseModel model)
+    {
+        try
+        {
+            switch (model)
+            {
+                case FileModel:
+                    File.Delete(model.FullPath);
+                    break;
+                case DirectoryModel:
+                    Directory.Delete(model.FullPath, true);
+                    break;
+            }
+        }
+        catch (UnauthorizedAccessException)
+        {
+            MessageBox.Show("Access is denied");
+        }
+
+        DirectoriesAndFiles.Remove(model);
+    } 
+    
     public void AddFavorite(DirectoryModel directoryModel)
     {
         if (FavoritesDirectories.Contains(directoryModel))

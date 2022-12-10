@@ -41,6 +41,12 @@
       <None Remove="Icons\img_277182.png" />
       <None Remove="Icons\forward.png" />
       <Resource Include="Icons\forward.png" />
+      <None Remove="Icons\directoryCreate.png" />
+      <Resource Include="Icons\directoryCreate.png" />
+      <None Remove="Icons\fileCreate.png" />
+      <Resource Include="Icons\fileCreate.png" />
+      <None Remove="Icons\file-plus-1.png" />
+      <Resource Include="Icons\file-plus-1.png" />
     </ItemGroup>
 
     <ItemGroup>

@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:FileManager.View"
         mc:Ignorable="d"
-        Title="DirectoryCreateWindow" Height="110" Width="200" ResizeMode="NoResize">
+        Title="DirectoryCreateWindow" Height="110" Width="200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
