@@ -29,9 +29,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="16*"/>
                 <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="58"/>
             </Grid.ColumnDefinitions>
             
             <TextBox Grid.Column="2" Height="25" Width="300" Text="{Binding SearchTextBox, 
@@ -131,9 +131,7 @@
                     <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
-            
         </DataGrid>
-        
     </Grid>
     
 </Window>

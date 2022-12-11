@@ -45,6 +45,7 @@ public class MainModel : BindableBase
             FavoritesDirectories = new ObservableCollection<DirectoryModel>();
         }
     }
+    
     public void Open(BaseModel model)
     {
         switch (model)
@@ -84,7 +85,6 @@ public class MainModel : BindableBase
         {
             DirectoriesAndFiles.Add(new FileModel(file.Name, file.FullName));
         }
-        
     }
     
     public void BackDirectory()
@@ -110,7 +110,6 @@ public class MainModel : BindableBase
         {
             MessageBox.Show("Directory not found.");
         }
-
     }
 
     private static void OpenFile(string filePath)
@@ -122,28 +121,32 @@ public class MainModel : BindableBase
     {
         try
         {
-            File.Create($"{path}\\{name}");
+            if (!File.Exists($"{path}\\{name}"))
+                File.Create($"{path}\\{name}");
+            else
+                MessageBox.Show("File is exist.");
             OpenDirectory(CurrentDirectory, false);
         }
         catch (UnauthorizedAccessException)
         {
             MessageBox.Show("Access is denied.");
         }
-        
     }
 
     public void CreateDirectory(string path, string name)
     {
         try
         {
-            Directory.CreateDirectory($"{path}\\{name}");
+            if (!Directory.Exists($"{path}\\{name}"))
+                Directory.CreateDirectory($"{path}\\{name}");
+            else
+                MessageBox.Show("Directory is exist.");
             OpenDirectory(CurrentDirectory);
         }
         catch (UnauthorizedAccessException)
         {
             MessageBox.Show("Access is denied.");
         }
-        
     }
 
     public void Delete(BaseModel model)
@@ -170,12 +173,6 @@ public class MainModel : BindableBase
     
     public void AddFavorite(DirectoryModel directoryModel)
     {
-        if (FavoritesDirectories.Contains(directoryModel))
-        {
-            MessageBox.Show($"{directoryModel} is exist.");
-            return;
-        }
-        
         FavoritesDirectories.Add(directoryModel);
         SaveData();
         RaisePropertyChanged("FavoritesDirectories");
@@ -186,6 +183,5 @@ public class MainModel : BindableBase
         FavoritesDirectories.RemoveAt(FavoritesDirectories.IndexOf(directoryModel));
         SaveData();
         RaisePropertyChanged("FavoritesDirectories");
-
     }
 }
