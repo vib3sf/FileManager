@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace FileManager.Models;
 
@@ -8,7 +9,7 @@ public sealed class FileModel : BaseModel
     {
         get
         {
-            var size = new FileInfo(FullPath).Length;
+            var size = (double) new FileInfo(FullPath).Length;
             var count = 0;
             while (size >= 1024) {
                 count++;
@@ -17,11 +18,11 @@ public sealed class FileModel : BaseModel
 
             return count switch
             {
-                0 => $"{size} Bytes",
-                1 => $"{size} KB",
-                2 => $"{size} MB",
-                3 => $"{size} GB",
-                5 => $"{size} TB",
+                0 => $"{Math.Round(size)} Bytes",
+                1 => $"{Math.Round(size)} KB",
+                2 => $"{Math.Round(size)} MB",
+                3 => $"{Math.Round(size)} GB",
+                5 => $"{Math.Round(size)} TB",
                 _ => ""
             };
         }
