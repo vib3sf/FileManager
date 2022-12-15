@@ -12,6 +12,10 @@
         <viewModels:MainViewModel/>
     </Window.DataContext>
     
+    <Window.InputBindings>
+        <KeyBinding Key="B" Modifiers="Control" Command="{Binding BackCommand}"/>
+    </Window.InputBindings>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

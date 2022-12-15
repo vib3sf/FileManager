@@ -3,8 +3,30 @@
 namespace FileManager.Models;
 
 public sealed class FileModel : BaseModel
-{ 
-    public long Size => new FileInfo(FullPath).Length;
+{
+    public string Size
+    {
+        get
+        {
+            var size = new FileInfo(FullPath).Length;
+            var count = 0;
+            while (size >= 1024) {
+                count++;
+                size /= 1024;
+            }
+
+            return count switch
+            {
+                0 => $"{size} Bytes",
+                1 => $"{size} KB",
+                2 => $"{size} MB",
+                3 => $"{size} GB",
+                5 => $"{size} TB",
+                _ => ""
+            };
+        }
+    }
+
     public override string CreationDate => new FileInfo(FullPath).CreationTime.ToLongDateString();
     public override string Icon
     {
