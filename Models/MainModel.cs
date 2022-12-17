@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Xml.Serialization;
 using Prism.Mvvm;
@@ -113,9 +114,9 @@ public class MainModel : BindableBase
     {
         Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
     }
-    
     public void CreateFile(string path, string name)
     {
+        if (IsInvalidName(name)) return;
         try
         {
             if (!File.Exists($"{path}\\{name}"))
@@ -132,6 +133,7 @@ public class MainModel : BindableBase
 
     public void CreateDirectory(string path, string name)
     {
+        if (IsInvalidName(name)) return;
         try
         {
             if (!Directory.Exists($"{path}\\{name}"))
@@ -148,6 +150,7 @@ public class MainModel : BindableBase
 
     public void Rename(BaseModel model, string newName)
     {
+        if (IsInvalidName(newName)) return;
         try
         {
             switch (model)
@@ -166,6 +169,13 @@ public class MainModel : BindableBase
         }
 
         DirectoriesAndFiles.Remove(model);
+    }
+    private static bool IsInvalidName(string name)
+    {
+        if (!Path.GetInvalidFileNameChars().Any(name.Contains)) return false;
+        MessageBox.Show("Invalid name");
+        return true;
+
     }
 
     public void Delete(BaseModel model)
@@ -186,6 +196,7 @@ public class MainModel : BindableBase
         {
             MessageBox.Show("Access is denied");
         }
+        
 
         DirectoriesAndFiles.Remove(model);
     } 
@@ -203,4 +214,5 @@ public class MainModel : BindableBase
         SaveData();
         RaisePropertyChanged("FavoritesDirectories");
     }
+    
 }
