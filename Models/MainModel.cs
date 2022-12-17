@@ -15,7 +15,7 @@ public class MainModel : BindableBase
     public string CurrentDirectory { get; private set; } = "";
     public ObservableCollection<BaseModel> DirectoriesAndFiles { get; } = new(); 
     public ObservableCollection<DirectoryModel> FavoritesDirectories { get; private set;  } = new(); 
-    private Stack<string> BackStack { get; } = new();
+    private Stack<string> PastDirectoriesStack { get; } = new();
     public MainModel()
     {
         OpenDirectory(@"C:\");
@@ -71,7 +71,7 @@ public class MainModel : BindableBase
         }
         CurrentDirectory = directoryPath;
         if (clearStack)
-            BackStack.Clear();
+            PastDirectoriesStack.Clear();
         RaisePropertyChanged("CurrentDirectory");
         DirectoriesAndFiles.Clear();
         foreach (var directory in directoryInfo.GetDirectories())
@@ -88,14 +88,14 @@ public class MainModel : BindableBase
     public void BackDirectory()
     {
         if (CurrentDirectory == @"C:\") return;
-        BackStack.Push(CurrentDirectory);
+        PastDirectoriesStack.Push(CurrentDirectory);
         OpenDirectory(new DirectoryInfo(CurrentDirectory).Parent!.FullName, false);
     }
 
     public void ForwardDirectory()
     {
-        if (BackStack.Count != 0)
-            OpenDirectory(BackStack.Pop(), false);
+        if (PastDirectoriesStack.Count != 0)
+            OpenDirectory(PastDirectoriesStack.Pop(), false);
     }
     
     public void FindAndOpenDirectory(string directoryPath)
@@ -123,12 +123,12 @@ public class MainModel : BindableBase
                 File.Create($"{path}\\{name}");
             else
                 MessageBox.Show("File is exist.");
-            OpenDirectory(CurrentDirectory, false);
         }
         catch (UnauthorizedAccessException)
         {
             MessageBox.Show("Access is denied.");
         }
+        OpenDirectory(CurrentDirectory, false);
     }
 
     public void CreateDirectory(string path, string name)
@@ -139,13 +139,14 @@ public class MainModel : BindableBase
             if (!Directory.Exists($"{path}\\{name}"))
                 Directory.CreateDirectory($"{path}\\{name}");
             else
-                MessageBox.Show("Directory is exist.");
-            OpenDirectory(CurrentDirectory);
+                MessageBox.Show("Directory is exist."); 
         }
         catch (UnauthorizedAccessException)
         {
             MessageBox.Show("Access is denied.");
         }
+        OpenDirectory(CurrentDirectory);
+
     }
 
     public void Rename(BaseModel model, string newName)
@@ -167,15 +168,14 @@ public class MainModel : BindableBase
         {
             MessageBox.Show("Access is denied");
         }
-
         DirectoriesAndFiles.Remove(model);
+        OpenDirectory(CurrentDirectory, false);
     }
     private static bool IsInvalidName(string name)
     {
         if (!Path.GetInvalidFileNameChars().Any(name.Contains)) return false;
         MessageBox.Show("Invalid name");
         return true;
-
     }
 
     public void Delete(BaseModel model)
