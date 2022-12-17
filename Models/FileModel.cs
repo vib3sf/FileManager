@@ -10,19 +10,16 @@ public sealed class FileModel : BaseModel
         get
         {
             var size = (double) new FileInfo(FullPath).Length;
-            var count = 0;
-            while (size >= 1024) {
-                count++;
-                size /= 1024;
-            }
+            var count = (int)Math.Log(size, 1024);
+            size = Math.Round(size / Math.Pow(1024, count));
 
             return count switch
             {
-                0 => $"{Math.Round(size)} Bytes",
-                1 => $"{Math.Round(size)} KB",
-                2 => $"{Math.Round(size)} MB",
-                3 => $"{Math.Round(size)} GB",
-                5 => $"{Math.Round(size)} TB",
+                0 => $"{size} Bytes",
+                1 => $"{size} KB",
+                2 => $"{size} MB",
+                3 => $"{size} GB",
+                5 => $"{size} TB",
                 _ => ""
             };
         }
