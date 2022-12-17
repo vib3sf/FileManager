@@ -6,7 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:viewModels="clr-namespace:FileManager.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="File manager" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     
     <Window.DataContext>
         <viewModels:MainViewModel/>
@@ -105,8 +105,7 @@
                  SelectedItem="{Binding SelectedItem}"
                  AutoGenerateColumns="False"
                  GridLinesVisibility="None"
-                 IsReadOnly="True"
-                 >
+                 IsReadOnly="True">
             
             <DataGrid.Columns>
                 
@@ -132,6 +131,7 @@
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Pin to favorites" Command="{Binding AddFavoriteCommand}"/>
+                    <MenuItem Header="Rename" Command="{Binding RenameCommand}"></MenuItem>
                     <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>

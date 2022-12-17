@@ -15,9 +15,6 @@ public class MainModel : BindableBase
     public ObservableCollection<BaseModel> DirectoriesAndFiles { get; } = new(); 
     public ObservableCollection<DirectoryModel> FavoritesDirectories { get; private set;  } = new(); 
     private Stack<string> BackStack { get; } = new();
-    
-    
-
     public MainModel()
     {
         OpenDirectory(@"C:\");
@@ -147,6 +144,28 @@ public class MainModel : BindableBase
         {
             MessageBox.Show("Access is denied.");
         }
+    }
+
+    public void Rename(BaseModel model, string newName)
+    {
+        try
+        {
+            switch (model)
+            {
+                case FileModel:
+                    File.Move(model.FullPath, $"{CurrentDirectory}\\{newName}");
+                    break;
+                case DirectoryModel:
+                    Directory.Move(model.FullPath,$"{CurrentDirectory}\\{newName}");
+                    break;
+            }
+        }
+        catch (UnauthorizedAccessException)
+        {
+            MessageBox.Show("Access is denied");
+        }
+
+        DirectoriesAndFiles.Remove(model);
     }
 
     public void Delete(BaseModel model)

@@ -4,8 +4,7 @@ namespace FileManager.Models;
 
 [Serializable]
 public abstract class BaseModel
-{
-    
+{ 
     public string Name { get; set; }
     public string FullPath { get; set; }
     public abstract string CreationDate { get; }
@@ -15,12 +14,6 @@ public abstract class BaseModel
         Name = name;
         FullPath = fullPath;
     }
-    protected BaseModel()
-    {
-        
-    }
-    public override string ToString()
-    {
-        return Name;
-    }
+    protected BaseModel() { }
+    public override string ToString() => Name;
 }

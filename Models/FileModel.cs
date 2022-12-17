@@ -49,7 +49,5 @@ public sealed class FileModel : BaseModel
             }
         }
     }
-    public FileModel(string name, string fullPath) : base(name, fullPath)
-    {
-    }
+    public FileModel(string name, string fullPath) : base(name, fullPath) { }
 }

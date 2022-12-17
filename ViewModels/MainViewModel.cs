@@ -24,6 +24,7 @@ public class MainViewModel : BindableBase
     public DelegateCommand DeleteCommand { get; }
     public DelegateCommand FileCreateWindowCommand { get; }
     public DelegateCommand DirectoryCreateWindowCommand { get; }
+    public DelegateCommand RenameCommand { get; }
 
     #endregion
     
@@ -51,14 +52,8 @@ public class MainViewModel : BindableBase
     private string CurrentDirectory { get => _mainModel.CurrentDirectory;
         set => _currentDirectory = value;
     }
-
-
     public ObservableCollection<BaseModel> DirectoryAndFiles => _mainModel.DirectoriesAndFiles;
-
     public ObservableCollection<DirectoryModel> FavoritesDirectories => _mainModel.FavoritesDirectories;
-    
-    
-    
     public MainViewModel()
     {
         SearchTextBox = CurrentDirectory;
@@ -109,6 +104,10 @@ public class MainViewModel : BindableBase
             _mainModel.ForwardDirectory();
             SearchTextBox = CurrentDirectory;
         });
-
+        RenameCommand = new DelegateCommand(() =>
+        {
+            var createWindow = new RenameWindow(_mainModel, this);
+            createWindow.ShowDialog();
+        });
     }
 }

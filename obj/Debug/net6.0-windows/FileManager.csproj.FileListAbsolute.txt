@@ -76,3 +76,5 @@ C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\Director
 C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\FileCreateWindow.g.cs
 C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\DirectoryCreateWindow.baml
 C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\FileCreateWindow.baml
+C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\RenameWindow.g.cs
+C:\Users\vib3sf\RiderProjects\FileManager\obj\Debug\net6.0-windows\View\RenameWindow.baml
