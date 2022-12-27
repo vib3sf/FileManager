@@ -14,36 +14,22 @@ public class MainModel : BindableBase
 {
     public string CurrentDirectory { get; private set; } = "";
     public ObservableCollection<BaseModel> DirectoriesAndFiles { get; } = new(); 
-    public ObservableCollection<DirectoryModel> FavoritesDirectories { get; private set;  } = new(); 
     private Stack<string> PastDirectoriesStack { get; } = new();
+    
     public MainModel()
     {
-        OpenDirectory(@"C:\");
-        LoadData();
+        OpenLogicalDrives();
     }
-    
-    private void SaveData()
-    {
-        var xmlSerializer = new XmlSerializer(typeof(ObservableCollection<DirectoryModel>));
 
-        using var fs = new FileStream("favorites.xml", FileMode.Create);
-        xmlSerializer.Serialize(fs, FavoritesDirectories);
-    }
-    
-    private void LoadData()
+    private void OpenLogicalDrives()
     {
-        var xmlSerializer = new XmlSerializer(typeof(ObservableCollection<DirectoryModel>));
-        try
+        CurrentDirectory = "";
+        DirectoriesAndFiles.Clear();
+        foreach (var logicalDrive in Directory.GetLogicalDrives())
         {
-            using var fs = new FileStream("favorites.xml", FileMode.OpenOrCreate);
-            FavoritesDirectories = (xmlSerializer.Deserialize(fs) as ObservableCollection<DirectoryModel>)!;
-        }
-        catch (InvalidOperationException)
-        {
-            FavoritesDirectories = new ObservableCollection<DirectoryModel>();
+            DirectoriesAndFiles.Add(new LogicalDriveModel(logicalDrive, logicalDrive));
         }
     }
-    
     public void Open(BaseModel model)
     {
         switch (model)
@@ -59,6 +45,12 @@ public class MainModel : BindableBase
     
     private void OpenDirectory(string directoryPath, bool clearStack = true)
     {
+        if (directoryPath == "")
+        {
+            OpenLogicalDrives();
+            return;
+        }
+
         var directoryInfo = new DirectoryInfo(directoryPath);
         try
         {
@@ -87,9 +79,16 @@ public class MainModel : BindableBase
     
     public void BackDirectory()
     {
-        if (CurrentDirectory == @"C:\") return;
-        PastDirectoriesStack.Push(CurrentDirectory);
-        OpenDirectory(new DirectoryInfo(CurrentDirectory).Parent!.FullName, false);
+        try
+        {
+            PastDirectoriesStack.Push(CurrentDirectory);
+            OpenDirectory(new DirectoryInfo(CurrentDirectory).Parent!.FullName, false);
+        }
+        catch (NullReferenceException)
+        {
+            OpenLogicalDrives();
+        }
+        catch(ArgumentException){}
     }
 
     public void ForwardDirectory()
@@ -117,6 +116,7 @@ public class MainModel : BindableBase
     public void CreateFile(string path, string name)
     {
         if (IsInvalidName(name)) return;
+        if (IsLogicalDrive()) return;
         try
         {
             if (!File.Exists($"{path}\\{name}"))
@@ -130,10 +130,10 @@ public class MainModel : BindableBase
         }
         OpenDirectory(CurrentDirectory, false);
     }
-
     public void CreateDirectory(string path, string name)
     {
         if (IsInvalidName(name)) return;
+        if (IsLogicalDrive()) return;
         try
         {
             if (!Directory.Exists($"{path}\\{name}"))
@@ -152,6 +152,7 @@ public class MainModel : BindableBase
     public void Rename(BaseModel model, string newName)
     {
         if (IsInvalidName(newName)) return;
+        if (IsLogicalDrive()) return;
         try
         {
             switch (model)
@@ -171,15 +172,16 @@ public class MainModel : BindableBase
         DirectoriesAndFiles.Remove(model);
         OpenDirectory(CurrentDirectory, false);
     }
+
     private static bool IsInvalidName(string name)
     {
         if (!Path.GetInvalidFileNameChars().Any(name.Contains)) return false;
         MessageBox.Show("Invalid name");
         return true;
     }
-
     public void Delete(BaseModel model)
     {
+        if (IsLogicalDrive()) return;
         try
         {
             switch (model)
@@ -199,20 +201,13 @@ public class MainModel : BindableBase
         
 
         DirectoriesAndFiles.Remove(model);
-    } 
-    
-    public void AddFavorite(DirectoryModel directoryModel)
-    {
-        FavoritesDirectories.Add(directoryModel);
-        SaveData();
-        RaisePropertyChanged("FavoritesDirectories");
     }
+    private bool IsLogicalDrive()
+    {
+        if (CurrentDirectory != "") 
+            return false;
+        MessageBox.Show("It's logical drive.");
+        return true;
 
-    public void RemoveFavorite(DirectoryModel directoryModel)
-    {
-        FavoritesDirectories.RemoveAt(FavoritesDirectories.IndexOf(directoryModel));
-        SaveData();
-        RaisePropertyChanged("FavoritesDirectories");
-    }
-    
+    } 
 }

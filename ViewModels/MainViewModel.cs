@@ -16,9 +16,6 @@ public class MainViewModel : BindableBase
     public DelegateCommand BackCommand { get; }
     public DelegateCommand ForwardCommand { get; }
     public DelegateCommand FindCommand { get; }
-    public DelegateCommand AddFavoriteCommand { get; }
-    public DelegateCommand OpenFavoriteCommand { get; }
-    public DelegateCommand RemoveFavoriteCommand { get; } 
     public DelegateCommand DeleteCommand { get; }
     public DelegateCommand FileCreateWindowCommand { get; }
     public DelegateCommand DirectoryCreateWindowCommand { get; }
@@ -29,7 +26,6 @@ public class MainViewModel : BindableBase
     #region SelectedItems
     
     public BaseModel SelectedItem { get; set; }
-    public DirectoryModel SelectedFavoriteItem { get; set; }
     
     #endregion
 
@@ -51,7 +47,6 @@ public class MainViewModel : BindableBase
         set => _currentDirectory = value;
     }
     public ObservableCollection<BaseModel> DirectoryAndFiles => _mainModel.DirectoriesAndFiles;
-    public ObservableCollection<DirectoryModel> FavoritesDirectories => _mainModel.FavoritesDirectories;
     public MainViewModel()
     {
         SearchTextBox = CurrentDirectory;
@@ -69,19 +64,6 @@ public class MainViewModel : BindableBase
         FindCommand = new DelegateCommand(() =>
         {
             _mainModel.FindAndOpenDirectory(SearchTextBox);
-        });
-        OpenFavoriteCommand = new DelegateCommand(() =>
-        {
-            if (SelectedFavoriteItem != null) _mainModel.Open(SelectedFavoriteItem);
-            SearchTextBox = CurrentDirectory;
-        });
-        AddFavoriteCommand = new DelegateCommand(() =>
-        {
-            if (SelectedItem is DirectoryModel model) _mainModel.AddFavorite(model);
-        });
-        RemoveFavoriteCommand = new DelegateCommand(() =>
-        {
-            if (SelectedFavoriteItem != null) _mainModel.RemoveFavorite(SelectedFavoriteItem);
         });
         DeleteCommand = new DelegateCommand(() =>
         {

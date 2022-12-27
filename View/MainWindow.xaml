@@ -6,136 +6,192 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:viewModels="clr-namespace:FileManager.ViewModels"
         mc:Ignorable="d"
-        Title="File manager" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    
-    <Window.DataContext>
-        <viewModels:MainViewModel/>
-    </Window.DataContext>
-    
-    <Window.InputBindings>
-        <KeyBinding Key="B" Modifiers="Control" Command="{Binding BackCommand}"/>
-    </Window.InputBindings>
+        Title="File manager" Height="450" Width="1000" WindowStartupLocation="CenterScreen">
     
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="5*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
         
-        <Grid Grid.ColumnSpan="3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid>
+            <Grid.DataContext>
+                <viewModels:MainViewModel/>
+            </Grid.DataContext>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.ColumnSpan="3">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2.5*"/>
+                    <ColumnDefinition Width="16*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="58"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBox Grid.Column="2" Height="25" Width="150" Text="{Binding SearchTextBox, 
+                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="2">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding FindCommand}" Key="Enter"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                
+                <Button Grid.Column="0" Margin="2" Height="25" Width="40" 
+                        Command="{Binding BackCommand}" Background="White" BorderThickness="0">
+                    <Image Source="../Icons/back.png" Width="30" Height="15"/>
+                </Button>
+                <Button Grid.Column="1" Margin="2" Height="25" Width="40" HorizontalAlignment="Left" Background="White"
+                        Command="{Binding ForwardCommand}" BorderThickness="0">
+                    <Image Source="../Icons/forward.png" Width="30" Height="15"/>
+                </Button>
+                <Button Grid.Column="3" Height="25" Width="40" Background="White" BorderThickness="0"
+                        Command="{Binding DirectoryCreateWindowCommand}" HorizontalAlignment="Left">
+                    <Image Source="../Icons/directoryCreate.png" Width="30" Height="25"/>
+                </Button>
+                <Button Grid.Column="4" Height="25" Width="40" Background="White" BorderThickness="0"
+                        Command="{Binding FileCreateWindowCommand}" HorizontalAlignment="Left">
+                    <Image Source="../Icons/file-plus-1.png" Width="30" Height="25"/>
+                </Button>
+                
+            </Grid>
+            
+            
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding DirectoryAndFiles}"
+                      SelectedItem="{Binding SelectedItem}"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="None"
+                      IsReadOnly="True">
+                
+                <DataGrid.Columns>
+                    
+                    <DataGridTemplateColumn IsReadOnly="True" CanUserResize="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Icon}" Width="25"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="4*"/>
+                    <DataGridTextColumn Header="Creation date" Binding="{Binding CreationDate}" Width="3*"/>
+                    <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="*"/>
+                </DataGrid.Columns>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction 
+                            Command="{Binding OpenCommand}"
+                            CommandParameter="{Binding SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Rename" Command="{Binding RenameCommand}"/>
+                        <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.DataContext>
+                <viewModels:MainViewModel/>
+            </Grid.DataContext>
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="16*"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="58"/>
+                <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
             
-            <TextBox Grid.Column="2" Height="25" Width="300" Text="{Binding SearchTextBox, 
-             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     Margin="2">
-                <TextBox.InputBindings>
-                    <KeyBinding Command="{Binding FindCommand}" Key="Enter"/>
-                </TextBox.InputBindings>
-            </TextBox>
+            <Grid Grid.ColumnSpan="3">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2.5*"/>
+                    <ColumnDefinition Width="16*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="58"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBox Grid.Column="2" Height="25" Width="150" Text="{Binding SearchTextBox, 
+                 Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="2">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding FindCommand}" Key="Enter"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                
+                <Button Grid.Column="0" Margin="2" Height="25" Width="40" 
+                        Command="{Binding BackCommand}" Background="White" BorderThickness="0">
+                    <Image Source="../Icons/back.png" Width="30" Height="15"/>
+                </Button>
+                <Button Grid.Column="1" Margin="2" Height="25" Width="40" HorizontalAlignment="Left" Background="White"
+                        Command="{Binding ForwardCommand}" BorderThickness="0">
+                    <Image Source="../Icons/forward.png" Width="30" Height="15"/>
+                </Button>
+                <Button Grid.Column="3" Height="25" Width="40" Background="White" BorderThickness="0"
+                        Command="{Binding DirectoryCreateWindowCommand}" HorizontalAlignment="Left">
+                    <Image Source="../Icons/directoryCreate.png" Width="30" Height="25"/>
+                </Button>
+                <Button Grid.Column="4" Height="25" Width="40" Background="White" BorderThickness="0"
+                        Command="{Binding FileCreateWindowCommand}" HorizontalAlignment="Left">
+                    <Image Source="../Icons/file-plus-1.png" Width="30" Height="25"/>
+                </Button>
+                
+            </Grid>
             
-            <Button Grid.Column="0" Margin="2" Height="25" Width="40" 
-                    Command="{Binding BackCommand}" Background="White" BorderThickness="0">
-                <Image Source="../Icons/back.png" Width="30" Height="15"/>
-            </Button>
-            <Button Grid.Column="1" Margin="2" Height="25" Width="40" HorizontalAlignment="Left" Background="White"
-                    Command="{Binding ForwardCommand}" BorderThickness="0">
-                <Image Source="../Icons/forward.png" Width="30" Height="15"/>
-            </Button>
-            <Button Grid.Column="3" Height="25" Width="40" Background="White" BorderThickness="0"
-                    Command="{Binding DirectoryCreateWindowCommand}" HorizontalAlignment="Left">
-                <Image Source="../Icons/directoryCreate.png" Width="30" Height="25"/>
-            </Button>
-            <Button Grid.Column="4" Height="25" Width="40" Background="White" BorderThickness="0"
-                    Command="{Binding FileCreateWindowCommand}" HorizontalAlignment="Left">
-                <Image Source="../Icons/file-plus-1.png" Width="30" Height="25"/>
-            </Button>
             
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding DirectoryAndFiles}"
+                      SelectedItem="{Binding SelectedItem}"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="None"
+                      IsReadOnly="True">
+                
+                <DataGrid.Columns>
+                    
+                    <DataGridTemplateColumn IsReadOnly="True" CanUserResize="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Icon}" Width="25"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="4*"/>
+                    <DataGridTextColumn Header="Creation date" Binding="{Binding CreationDate}" Width="3*"/>
+                    <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="*"/>
+                </DataGrid.Columns>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction 
+                            Command="{Binding OpenCommand}"
+                            CommandParameter="{Binding SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Rename" Command="{Binding RenameCommand}"/>
+                        <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
         </Grid>
-        
-        
-        <GridSplitter Grid.Row="1" Grid.Column="1" ShowsPreview="True" Width="3"
-                      HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
-        
-        <GridSplitter Grid.Row="1" Grid.Column="2" ShowsPreview="True" Width="3"
-                      HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
-        
-        <ListBox Grid.Row="1" Grid.Column="0" 
-                 ItemsSource="{Binding FavoritesDirectories}"
-                 SelectedItem="{Binding SelectedFavoriteItem}">
-            
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding Icon}" Width="25" />
-                        <TextBlock Text="{Binding Name}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction 
-                        Command="{Binding OpenFavoriteCommand}"
-                        CommandParameter="{Binding SelectedFavoriteItem}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <ListBox.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header= "Remove to favorites" Command="{Binding RemoveFavoriteCommand}"/>
-                </ContextMenu>
-            </ListBox.ContextMenu>
-        </ListBox>
-        
-        
-        <DataGrid Grid.Row="1" Grid.Column="2"
-                 ItemsSource="{Binding DirectoryAndFiles}"
-                 SelectedItem="{Binding SelectedItem}"
-                 AutoGenerateColumns="False"
-                 GridLinesVisibility="None"
-                 IsReadOnly="True">
-            
-            <DataGrid.Columns>
-                
-                <DataGridTemplateColumn IsReadOnly="True" CanUserResize="False">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding Icon}" Width="25"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="5*"/>
-                <DataGridTextColumn Header="Creation date" Binding="{Binding CreationDate}"/>
-                <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="*"/>
-            </DataGrid.Columns>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction 
-                        Command="{Binding OpenCommand}"
-                        CommandParameter="{Binding SelectedItem}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Pin to favorites" Command="{Binding AddFavoriteCommand}"/>
-                    <MenuItem Header="Rename" Command="{Binding RenameCommand}"></MenuItem>
-                    <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-        </DataGrid>
     </Grid>
+    
+    
     
 </Window>

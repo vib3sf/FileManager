@@ -52,6 +52,11 @@
       <Resource Include="Icons\fileCreate.png" />
       <None Remove="Icons\file-plus-1.png" />
       <Resource Include="Icons\file-plus-1.png" />
+      <None Remove="Icons\istockphoto-1034265088-612x612.jpg" />
+      <None Remove="Icons\logicalDrive.png" />
+      <None Remove="Icons\hard-disk-icon-29.png" />
+      <None Remove="Icons\index.png" />
+      <Resource Include="Icons\logicalDrive.png" />
     </ItemGroup>
 
     <ItemGroup>
